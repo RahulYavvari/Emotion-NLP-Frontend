@@ -4,7 +4,7 @@ import { emojiResource } from "@/app/constants";
 import GreenTick from "@/app/public/assets/green_tick.png";
 
 const Feedback = ( { response } ) => {
-
+    // BUG: [Is new response is same a previous, the feedback is not being asked]
     const feedbackEmojiWidth = 60;
     const [isFeedbackNeeded, setIsFeedbackNeeded] = useState(true);
     const [isFeedbackReceived, setIsFeedbackReceived] = useState(false);
