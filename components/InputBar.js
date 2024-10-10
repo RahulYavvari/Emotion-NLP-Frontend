@@ -14,7 +14,7 @@ const handleSubmit = (e) => {
     return emotionTags[Math.floor(Math.random()*emotionTags.length)];
 }
 
-const InputBar = ({setResponse, setInput}) => {
+const InputBar = ({setResponse, setInput, setIsSendClicked}) => {
 
     const [userInput, setUserInput] = useState("");
     return (
@@ -32,7 +32,7 @@ const InputBar = ({setResponse, setInput}) => {
                     <textarea name="userInput" placeholder="Enter your text here" className=" no-scrollbar transition transform hover:shadow-2xl active:shadow-2xl flex-1 shadow-xl border-gray-300 border-[0.5px] rounded-[10px] p-[1rem] pb-10 resize-none focus:outline-none  min-h-[150px] max-h-[500px]" wrap="soft" value={userInput} onChange={(event) => setUserInput(event.target.value)}></textarea>
                 </div>
                 <div className="absolute bottom-[1rem] right-[1rem]">
-                    <SendButton isActive={userInput != "" ? true : false} />
+                    <SendButton onClick={() => {setIsSendClicked(true)}} isActive={userInput != "" ? true : false} />
                 </div>
             </form>
 

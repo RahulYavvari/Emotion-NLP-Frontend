@@ -13,6 +13,7 @@ export default function Home() {
   const [response, setResponse] = useState("");
   const [askFeedback, setAskFeedback] = useState(false);
 
+  const [isSendClicked, setIsSendClicked] = useState(false);
   useEffect(() => {
     if(response != "") {
       setTimeout(() => {
@@ -25,10 +26,10 @@ export default function Home() {
     <div>
       <Navbar />
       <div className="m-auto px-10 max-w-[1250px] py-8 flex-col justify-center">
-        <InputBar setResponse={setResponse} setInput={setInput}/> 
+        <InputBar setResponse={setResponse} setInput={setInput} setIsSendClicked={setIsSendClicked}/> 
         <EmotionResponse input={input} response={response} />
-
-        {askFeedback== true ? <Feedback />: <></>}
+        
+        {askFeedback == true ? <Feedback response={response} />: null}
       </div>
     </div>
   );
