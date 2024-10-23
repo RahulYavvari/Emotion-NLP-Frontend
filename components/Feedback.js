@@ -7,47 +7,52 @@ import { userHistory } from "@/app/page";
 
 const Feedback = ({ response }) => {
   const feedbackEmojiWidth = 60;
-  const [isFeedbackNeeded, setIsFeedbackNeeded] = useState(true);
+  const [isFeedbackNeeded, setIsFeedbackNeeded] = useState(false); 
   const [isFeedbackReceived, setIsFeedbackReceived] = useState(false);
   const [takeFeedback, setTakeFeedback] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
 
   useEffect(() => {
+    setShowThankYou(false);       
+    setIsFeedbackNeeded(false);  
+    setTakeFeedback(false);       
+    setIsFeedbackReceived(false); 
+
+    const delayFeedbackPrompt = setTimeout(() => {
+      setIsFeedbackNeeded(true);
+    }, 0); 
+    return () => clearTimeout(delayFeedbackPrompt);
+    
+  }, [response, userHistory.length]); 
+
+  const noFeedbackHandler = () => {
+    setIsFeedbackNeeded(false); 
+    setTakeFeedback(true);      
+  };
+
+  const yesFeedbackHandler = () => {
+    setIsFeedbackNeeded(false); 
+    setIsFeedbackReceived(true);
+  };
+
+  const handleFeedback = (e, emotion) => {
+    console.log(`Selected emotion: ${emotion}`);
+    userHistory[userHistory.length - 1].response = emotion;
+    setTakeFeedback(false);     
+    setIsFeedbackReceived(true);  
+  };
+
+  useEffect(() => {
     if (isFeedbackReceived) {
       setShowThankYou(true);
       const timeout = setTimeout(() => {
-        setShowThankYou(false); 
-        setIsFeedbackReceived(false); 
+        setShowThankYou(false);  
+        setIsFeedbackReceived(false);
       }, 3000);
 
       return () => clearTimeout(timeout);
     }
   }, [isFeedbackReceived]);
-
-
-  useEffect(() => {
-    setIsFeedbackNeeded(true);    
-    setTakeFeedback(false);        
-    setIsFeedbackReceived(false);   
-    setShowThankYou(false);        
-  }, [response]); 
-
-  const noFeedbackHandler = () => {
-    setIsFeedbackNeeded(false); 
-    setTakeFeedback(true);    
-  };
-
-  const yesFeedbackHandler = () => {
-    setIsFeedbackNeeded(false);  
-    setIsFeedbackReceived(true);  
-  };
-
-  const handleFeedback = (e, emotion) => {
-    console.log(`Selected emotion: ${emotion}`);
-    userHistory[userHistory.length-1].response = emotion;
-    setTakeFeedback(false);       
-    setIsFeedbackReceived(true); 
-  };
 
   return (
     <div>
